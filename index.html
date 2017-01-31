@@ -1,0 +1,77 @@
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+</head>
+<body class="bod">
+	<p>Open the console and click a box. </br> Reload the page and click another box. </br> <i>This project is about: propagation, event capturing, bubbliing and the property once.</i> </p>
+  <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+
+  <div class="row text-center"> <!-- for footer -->
+      <h5><a href="http://www.eleftheriabatsou.com" target="_blank">Eleftheria Batsou</a> | <a href="http://codepen.io/EleftheriaBatsou" target="_blank">Projects</a></h5>
+  </div> <!-- end footer -->
+  
+<style>
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after { box-sizing: inherit; }
+
+  div {
+    width:100%;
+    padding:100px;
+  }
+
+  .one {
+    background: thistle;
+  }
+
+  .two {
+    background:mistyrose;
+  }
+
+  .three {
+    background:coral;
+  }
+</style>
+
+<button></button>
+<script>
+
+	const divs = document.querySelectorAll('div');
+	const button = document.querySelector('button');
+	
+	function logText(e) {
+		console.log(this.classList.value);
+		//stop bubbling this event up, it will not trigger event
+		//e.stopPropagation(); 
+		//console.log(this);
+	}
+	//stop propagation = stop bubbling
+	
+	divs.forEach(div => div.addEventListener('click', logText, {
+		capture: false, // false: is the default
+		once: true
+	}));
+	
+	button.addEventListener('click', () => {
+		console.log('Click!!!');
+	}, {
+		once: true
+	});
+
+</script>
+</body>
+</html>
+
+<!-- add event listener -->
+<!-- propagation, event capturing, bubbliing and property once -->
+<!-- bubbling: when you click everything that is up to this level will also be clicked-->
+<!--  the browser will first capture, which means that when you click on the element it will ripple it down. The capture is from top down, and then it will bubble up -->
+<!--once is a very new property. If it's equall to true, it will listen for a click and then unbind the event, which is the same with remove -->
